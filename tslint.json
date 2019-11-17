@@ -18,7 +18,10 @@
     "component-selector": [
       true,
       "element",
-      "app",
+      [
+        "app",
+        "grm"
+      ],
       "kebab-case"
     ],
     "import-blacklist": [

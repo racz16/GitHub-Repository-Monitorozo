@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { TokenService } from 'src/bll/services/token-service';
 
 @Component({
   selector: 'app-root',
@@ -7,25 +7,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  protected title = 'GitHubRepositoryMonitorozo';
-  private array = new Array<string>();
 
-  public get asd(): string {
-    return this.title;
-  }
+  public constructor(private tokenService: TokenService) { }
 
-  public constructor(ro: Router) {
-    const a = 5;
-  }
-
-  public getTitle(asd: string): string {
-    const a = 2;
-    for (let i = 0; i < this.array.length; i++) {
-      this.array[a * i] = 'asd';
-    }
-
-    // asd = 'asd';
-    return this.title;
+  public isThereToken(): boolean {
+    return this.tokenService.isTokenSavedInLocalStorage();
   }
 
 }
