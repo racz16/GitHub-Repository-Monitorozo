@@ -4,17 +4,17 @@ import { OrganizationListModel } from 'src/bll/models/organization-list.model';
 import { OrganizationService } from 'src/bll/services/organization-service';
 
 @Component({
-  selector: 'grm-subject-list',
-  templateUrl: './subject-list.component.html',
-  styleUrls: ['./subject-list.component.scss']
+  selector: 'grm-organization-list',
+  templateUrl: './organization-list.component.html',
+  styleUrls: ['./organization-list.component.scss']
 })
-export class SubjectListComponent implements OnInit {
+export class OrganizationListComponent implements OnInit {
 
   public organizations: Array<OrganizationListModel>;
 
   public constructor(private tokenService: TokenService, private organizationService: OrganizationService) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.organizationService.getOrganizations().subscribe((olm) => this.organizations = olm);
   }
 

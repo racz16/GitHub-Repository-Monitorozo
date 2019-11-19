@@ -7,11 +7,11 @@ import { ExportService } from 'src/bll/services/export-service';
 import { RepositoryListModel } from 'src/bll/models/repository-list.model';
 
 @Component({
-  selector: 'grm-subject-detailed',
-  templateUrl: './subject-detailed.component.html',
-  styleUrls: ['./subject-detailed.component.scss']
+  selector: 'grm-organization-detailed',
+  templateUrl: './organization-detailed.component.html',
+  styleUrls: ['./organization-detailed.component.scss']
 })
-export class SubjectDetailedComponent implements OnInit {
+export class OrganizationDetailedComponent implements OnInit {
 
   @ViewChild('prefixInput', { static: false })
   public prefixInput: ElementRef<HTMLInputElement>;
@@ -27,11 +27,9 @@ export class SubjectDetailedComponent implements OnInit {
     private exportService: ExportService
   ) { }
 
-  public ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.organizationService.getOrganization(id).subscribe((odm) => {
-      this.organization = odm;
-    });
+  public ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('organizationId');
+    this.organizationService.getOrganization(id).subscribe((odm) => this.organization = odm);
   }
 
   public isThereToken(): boolean {
@@ -40,6 +38,12 @@ export class SubjectDetailedComponent implements OnInit {
 
   public isExportButtonDisabled(): boolean {
     return this.exportButtonDisabled;
+  }
+
+  public filterKeyUp(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      this.setPrefix();
+    }
   }
 
   public setPrefix(): void {
@@ -52,7 +56,7 @@ export class SubjectDetailedComponent implements OnInit {
     const file = (event.target as HTMLInputElement).files[0];
     const blob = await this.exportService.createExportBlob(file, this.organization.repositories);
     this.exportButton.nativeElement.href = URL.createObjectURL(blob);
-    this.exportButton.nativeElement.download = 'export.csv';
+    this.exportButton.nativeElement.download = `${this.organization.name}_export.csv`;
     this.exportButtonDisabled = false;
   }
 

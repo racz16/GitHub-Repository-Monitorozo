@@ -1,25 +1,25 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SettingsComponent } from './settings/settings.component';
-import { SubjectListComponent } from './subject-list/subject-list.component';
-import { SubjectDetailedComponent } from './subject-detailed/subject-detailed.component';
+import { OrganizationListComponent } from './organization-list/organization-list.component';
+import { OrganizationDetailedComponent } from './organization-detailed/organization-detailed.component';
 
 const routes: Routes = [
   {
-    path: 'beallitasok',
+    path: 'settings',
     component: SettingsComponent
   },
   {
-    path: 'tantargyak/:tantargyId/hallgatok/:hallgatoId',
+    path: 'organizations/:organizationId/repositories/:repositoryId',
     component: SettingsComponent
   },
   {
-    path: 'tantargyak/:id',
-    component: SubjectDetailedComponent
+    path: 'organizations/:organizationId',
+    component: OrganizationDetailedComponent
   },
   {
     path: '**',
-    component: SubjectListComponent
+    component: OrganizationListComponent
   }
 ];
 

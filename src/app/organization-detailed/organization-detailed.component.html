@@ -20,14 +20,6 @@
         <div class="text-justify mb-3">
             A feltöltést követően az eredmények exportálása gombra kattintva letöltheted a fájlt.
         </div>
-        <!--<div class="custom-file mb-2">
-            <input (change)="fileChanged($event)" type="file" accept=".csv" class="custom-file-input" id="fileBrowser">
-            <label class="custom-file-label" for="fileBrowser">CSV fájl kiválasztása</label>
-        </div>
-        <a class="btn btn-secondary" [ngClass]="{'disabled' : isExportButtonDisabled()}" #exportButton href="">
-            Eredmények exportálása
-        </a>-->
-
         <div class="input-group">
             <div class="custom-file">
                 <input (change)="fileChanged($event)" type="file" accept=".csv" class="custom-file-input"
@@ -39,7 +31,6 @@
                     href="">
                     Eredmények exportálása
                 </a>
-                <!--<button class="btn btn-outline-secondary" type="button">Button</button>-->
             </div>
         </div>
 
@@ -52,21 +43,19 @@
         <h5 class="mb-2">Hallgatók</h5>
         <div class="input-group mb-3">
             <input #prefixInput type="text" class="form-control" placeholder="Repository prefix"
-                [value]="organization.prefix || ''" (keyup)="setPrefix()">
+                [value]="organization.prefix || ''" (keyup)="filterKeyUp($event)">
             <div class="input-group-append">
-                <button (click)="setPrefix()" class="btn btn-secondary" type="button">Keresés</button>
+                <button (click)="setPrefix()" class="btn btn-secondary" type="button">
+                    <i class="fas fa-filter"></i>
+                </button>
             </div>
         </div>
         <div class="list-group">
             <div *ngFor="let repository of organization.repositories">
                 <button *ngIf="isVisible(repository)" class="list-group-item list-group-item-action" type="button"
-                    [routerLink]="['/tantargyak', organization.name, 'hallgatok', repository.id]">
+                    [routerLink]="['/organizations', organization.name, 'repositories', repository.name]">
                     <span class="repo-name">
                         {{repository.name}}
-                    </span>
-                    <span class="stat">
-                        <span>{{repository.branchCount}}</span>
-                        <i class="fas fa-code-branch"></i>
                     </span>
                     <span class="stat">
                         <span>{{repository.pointCount}}</span>

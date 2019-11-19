@@ -16,7 +16,7 @@ export class SetTokenComponent implements OnInit {
 
   public constructor(private tokenService: TokenService) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.refreshToken();
   }
 
@@ -30,7 +30,7 @@ export class SetTokenComponent implements OnInit {
     this.refreshToken();
   }
 
-  public disableRemoveTokenButton(): boolean {
+  public isRemoveTokenButtonDisabled(): boolean {
     return !this.tokenService.isTokenSavedInLocalStorage();
   }
 

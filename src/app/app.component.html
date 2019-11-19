@@ -1,11 +1,11 @@
-<nav class="navbar navbar-light bg-light">
+<nav class="navbar navbar-light fixed-top bg-light">
     <a class="navbar-brand" routerLink="/">GitHub Repository Monitorozó</a>
     <span class="navbar-text">
-        <a routerLink="/beallitasok">
+        <a routerLink="/settings">
             <i class="fas fa-cog"></i>
         </a>
     </span>
 </nav>
-<div class="container">
+<div class="container router-outlet-wrapper">
     <router-outlet></router-outlet>
 </div>

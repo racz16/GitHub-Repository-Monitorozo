@@ -2,9 +2,9 @@
 <div class="my-3" *ngIf="isThereToken()">
     <h4 class="mb-3">Tantárgyak</h4>
     <div class="list-group">
-        <button *ngFor="let organization of organizations" type="button" [routerLink]="['/tantargyak', organization.id]"
-            class="list-group-item list-group-item-action">
-            <span class="repo-name">
+        <button *ngFor="let organization of organizations" type="button"
+            [routerLink]="['/organizations', organization.name]" class="list-group-item list-group-item-action">
+            <span class="org-name">
                 {{organization.name}}
             </span>
             <span class="stat" title="Az organization-ben található repository-k száma.">
