@@ -1,15 +1,19 @@
 .repo-name{
     display: inline-block;
-    width: calc(100% - 70px);
+    width: calc(100% - 120px);
 }
 
 .stat{
     display: inline-block;
-    width: 55px;
+    width: 50px;
     margin: 0 5px;
 
     span{
         margin-right: 5px;
         font-size: 18px;
     }
+}
+
+.custom-file-input ~ .custom-file-label::after {
+    content: "Tallózás";
 }

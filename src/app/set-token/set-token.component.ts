@@ -11,7 +11,7 @@ export class SetTokenComponent implements OnInit {
   @Input()
   public removeTokenButton = true;
   @ViewChild('tokenTextArea', { static: false })
-  public tokenTextArea: ElementRef;
+  public tokenTextArea: ElementRef<HTMLTextAreaElement>;
   public token: string;
 
   public constructor(private tokenService: TokenService) { }
@@ -21,7 +21,7 @@ export class SetTokenComponent implements OnInit {
   }
 
   public setToken(): void {
-    this.token = (this.tokenTextArea.nativeElement as HTMLTextAreaElement).value;
+    this.token = this.tokenTextArea.nativeElement.value;
     this.tokenService.saveTokenToLocalStorage(this.token);
   }
 

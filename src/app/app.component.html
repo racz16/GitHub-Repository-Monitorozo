@@ -1,12 +1,11 @@
 <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" routerLink="/">GitHub Repository Monitorozó</a>
     <span class="navbar-text">
-        <a routerLink="/settings">
+        <a routerLink="/beallitasok">
             <i class="fas fa-cog"></i>
         </a>
     </span>
 </nav>
 <div class="container">
-    <grm-set-token *ngIf="!isThereToken()" [removeTokenButton]="false"></grm-set-token>
     <router-outlet></router-outlet>
 </div>

@@ -6,12 +6,4 @@ import { TokenService } from 'src/bll/services/token-service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-
-  public constructor(private tokenService: TokenService) { }
-
-  public isThereToken(): boolean {
-    return this.tokenService.isTokenSavedInLocalStorage();
-  }
-
-}
+export class AppComponent { }
