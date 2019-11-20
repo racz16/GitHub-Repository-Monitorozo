@@ -21,23 +21,28 @@ export class ExportService {
     }
 
     private createExportFieContent(importFileContent: string, repositories: Array<RepositoryListModel>): string {
+        const repositoryNeptunMap = this.createRepositoryNeptunMapFromImortFile(importFileContent);
+        let result = 'Neptun-kód;Pontszám' + ExportService.NEW_LINE;
+        for (const repository of repositories) {
+            const neptunCode = repositoryNeptunMap.get(repository.name);
+            result += `${neptunCode};${repository.pointCount}${ExportService.NEW_LINE}`;
+        }
+        return result;
+    }
+
+    private createRepositoryNeptunMapFromImortFile(importFileContent: string): Map<string, string> {
         const rows = importFileContent.split(ExportService.NEW_LINE);
         rows.splice(0, 1);
-        const repositoryNeptunCodeMap = new Map<string, string>();
+        const repositoryNeptunMap = new Map<string, string>();
         for (const row of rows) {
             const splitRow = row.split(';');
             const neptunCode = splitRow[0];
             const repository = splitRow[1];
-            repositoryNeptunCodeMap.set(repository, neptunCode);
-        }
-        let result = 'Neptun-kód;Pontszám' + ExportService.NEW_LINE;
-        for (const repository of repositories) {
-            const neptunCode = repositoryNeptunCodeMap.get(repository.name);
-            if (neptunCode) {
-                result += `${neptunCode};${repository.pointCount}${ExportService.NEW_LINE}`;
+            if (repository && neptunCode) {
+                repositoryNeptunMap.set(repository, neptunCode);
             }
         }
-        return result;
+        return repositoryNeptunMap;
     }
 
 }

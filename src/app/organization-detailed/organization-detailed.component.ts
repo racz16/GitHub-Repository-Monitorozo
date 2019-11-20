@@ -19,6 +19,19 @@ export class OrganizationDetailedComponent implements OnInit {
   public exportButton: ElementRef<HTMLAnchorElement>;
   public organization: OrganizationDetailedModel;
   private exportButtonDisabled = true;
+  public exportInfoTitle = 'Eredmények exportálása';
+  public exportInfoContent =
+    '<p>Az eredmények exportálása lehetséges egy CSV kiterjesztésű fájlba, melynek (az első, fejléc sorát kivéve) minden sora a ' +
+    'következő mintára illeszkedik:</p>' +
+    '<p class="text-center">&lt;Neptun-kód&gt;;&lt;Pontszám&gt;</p>' +
+    '<p>Az exportálás megkezdéséhez azonban előbb egy CSV kiterjesztésű fájlt kell feltölteni, a tallozás gombra kattintva, ' +
+    'melynek(az első, fejléc sorát kivéve) minden sora a következő mintára illeszkedik:</p>' +
+    '<p class="text-center">&lt;Neptun-kód&gt;;&lt;GitHub Repository név&gt;</p>' +
+    '<p>A feltöltést követően az eredmények exportálása gombra kattintva letöltheted a fájlt.</p>';
+  public repoInfoTitle = 'Repository lista';
+  public repoInfoContent = 'Az Organizationben megtalálható Repositoryk. Minden hallgatónak létre kell hoznia egy ' +
+    'Repositoryt a projektje számára. Ha az Organization-ön belül egyéb (pl. példakódokat tartalmazó) Repositoryk ' +
+    'is megtalálhatók, akkor érdemes a hallgatói Repositorykat egy prefixel létrehozni, majd erre a prefixre rászűrni.';
 
   public constructor(
     private route: ActivatedRoute,

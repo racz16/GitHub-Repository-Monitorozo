@@ -11,8 +11,14 @@ import { OrganizationService } from 'src/bll/services/organization-service';
 export class OrganizationListComponent implements OnInit {
 
   public organizations: Array<OrganizationListModel>;
+  public infoTitle = 'Organization lista';
+  public infoContent = 'A rendszerben minden tantárgyat egy GitHub Organization jelképez. ' +
+    'Az Organization-ön belül minden hallgatónak létre kell hoznia egy Repositoryt a projektje számára.';
 
-  public constructor(private tokenService: TokenService, private organizationService: OrganizationService) { }
+  public constructor(
+    private tokenService: TokenService,
+    private organizationService: OrganizationService
+  ) { }
 
   public ngOnInit(): void {
     this.organizationService.getOrganizations().subscribe((olm) => this.organizations = olm);

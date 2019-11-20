@@ -7,6 +7,7 @@ import { SetTokenComponent } from './set-token/set-token.component';
 import { SettingsComponent } from './settings/settings.component';
 import { OrganizationListComponent } from './organization-list/organization-list.component';
 import { OrganizationDetailedComponent } from './organization-detailed/organization-detailed.component';
+import { HelpButtonComponent } from './help-button/help-button.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { OrganizationDetailedComponent } from './organization-detailed/organizat
     SetTokenComponent,
     SettingsComponent,
     OrganizationListComponent,
-    OrganizationDetailedComponent
+    OrganizationDetailedComponent,
+    HelpButtonComponent
   ],
   imports: [
     BrowserModule,

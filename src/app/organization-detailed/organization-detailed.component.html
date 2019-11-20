@@ -1,25 +1,10 @@
 <grm-set-token *ngIf="!isThereToken()" [removeTokenButton]="false"></grm-set-token>
 <div class="my-3" *ngIf="isThereToken()">
+    <a class="back-button" routerLink="/">&lt;&lt; Organization lista</a>
     <h4 class="mb-3">{{organization.name}}</h4>
     <div class="mt-1 mb-3">
-        <h5 class="mb-2">Eredmények exportálása</h5>
-        <div class="text-justify">
-            Az eredmények exportálása lehetséges egy CSV kiterjesztésű fájlba, melynek (az első, fejléc sorát kivéve)
-            minden sora a következő mintára illeszkedik:
-        </div>
-        <div class="text-center">
-            &lt;Neptun-kód&gt;;&lt;Pontszám&gt;
-        </div>
-        <div class="text-justify">
-            Az exportálás megkezdéséhez azonban előbb egy CSV kiterjesztésű fájlt kell feltölteni, a tallozás gombra
-            kattintva, melynek (az első, fejléc sorát kivéve) minden sora a következő mintára illeszkedik:
-        </div>
-        <div class="text-center">
-            &lt;Neptun-kód&gt;;&lt;GitHub Repository név&gt;
-        </div>
-        <div class="text-justify mb-3">
-            A feltöltést követően az eredmények exportálása gombra kattintva letöltheted a fájlt.
-        </div>
+        <h5 class="mb-2 mr-2 d-inline-block">Eredmények exportálása</h5>
+        <grm-help-button [title]="exportInfoTitle" [content]="exportInfoContent"></grm-help-button>
         <div class="input-group">
             <div class="custom-file">
                 <input (change)="fileChanged($event)" type="file" accept=".csv" class="custom-file-input"
@@ -40,7 +25,8 @@
         <div>...</div>
     </div>
     <div class="mt-1 mb-3">
-        <h5 class="mb-2">Hallgatók</h5>
+        <h5 class="mb-2 mr-2 d-inline-block">Repository lista</h5>
+        <grm-help-button [title]="repoInfoTitle" [content]="repoInfoContent"></grm-help-button>
         <div class="input-group mb-3">
             <input #prefixInput type="text" class="form-control" placeholder="Repository prefix"
                 [value]="organization.prefix || ''" (keyup)="filterKeyUp($event)">
@@ -57,7 +43,7 @@
                     <span class="repo-name">
                         {{repository.name}}
                     </span>
-                    <span class="stat">
+                    <span class="stat" title="Az adott hallgató által megszerzett pontok száma.">
                         <span>{{repository.pointCount}}</span>
                         <i class="far fa-star"></i>
                     </span>
