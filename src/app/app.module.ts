@@ -8,6 +8,9 @@ import { SettingsComponent } from './settings/settings.component';
 import { OrganizationListComponent } from './organization-list/organization-list.component';
 import { OrganizationDetailedComponent } from './organization-detailed/organization-detailed.component';
 import { HelpButtonComponent } from './help-button/help-button.component';
+import { CreateEditTaskModalComponent } from './create-edit-task-modal/create-edit-task-modal.component';
+import { FormsModule } from '@angular/forms';
+import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -16,12 +19,19 @@ import { HelpButtonComponent } from './help-button/help-button.component';
     SettingsComponent,
     OrganizationListComponent,
     OrganizationDetailedComponent,
-    HelpButtonComponent
+    HelpButtonComponent,
+    CreateEditTaskModalComponent,
+    ConfirmModalComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule
+  ],
+  entryComponents: [
+    CreateEditTaskModalComponent,
+    ConfirmModalComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

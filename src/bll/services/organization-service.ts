@@ -3,6 +3,8 @@ import { Observable, of } from 'rxjs';
 import { OrganizationListModel } from '../models/organization-list.model';
 import { OrganizationDetailedModel } from '../models/organization-detailed.model';
 import { RepositoryListModel } from '../models/repository-list.model';
+import { Task } from '../models/task.model';
+import { Deadline } from '../models/deadline.model';
 
 @Injectable({
     providedIn: 'root',
@@ -26,6 +28,7 @@ export class OrganizationService {
         const organization = new OrganizationDetailedModel();
         organization.name = 'Sznikak-19F2';
         organization.repositories = new Array<RepositoryListModel>();
+        organization.tasks = new Array<Task>();
 
         const rep1 = new RepositoryListModel();
         rep1.name = 'sznikak-kbela';
@@ -53,8 +56,14 @@ export class OrganizationService {
         organization.repositories.push(rep5);
 
         const localOrganization = this.loadOrganizationFromLocalStorage(organization.name);
-        if (localOrganization && localOrganization.prefix) {
+        if (localOrganization) {
             organization.prefix = localOrganization.prefix;
+            organization.tasks = localOrganization.tasks;
+            for (const task of organization.tasks) {
+                if (task.deadline) {
+                    task.deadline = Object.assign(new Deadline(), task.deadline);
+                }
+            }
         }
 
         return of(organization);
@@ -62,8 +71,7 @@ export class OrganizationService {
 
     public saveOrganizationToLocalStorage(organization: OrganizationDetailedModel): void {
         const json = JSON.stringify(organization, (k, v) => {
-            return k === 'repositories' || k === 'name'
-                ? undefined : v;
+            return k === 'repositories' ? undefined : v;
         });
         window.localStorage.setItem(organization.name, json);
     }

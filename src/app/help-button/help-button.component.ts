@@ -8,13 +8,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class HelpButtonComponent {
 
-  public constructor(public modalService: NgbModal) { }
-
   @Input()
   public title = 'Cím';
   @Input()
   public content = 'Tartalom';
   @Input()
   public closeButtonText = 'Bezárás';
+
+  public constructor(public modalService: NgbModal) { }
 
 }

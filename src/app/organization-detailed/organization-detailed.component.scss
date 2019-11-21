@@ -14,6 +14,29 @@
     }
 }
 
+th:last-child{
+    width: 150px;
+}
+
+td i:hover{
+    cursor: pointer;
+    color: dodgerblue;
+}
+
+td i:last-child:hover{
+    color: red;
+}
+
+tbody:nth-child(2) i:first-child{
+    cursor: default;
+    color: lightgray;
+}
+
+tbody:last-child i:nth-child(2) {
+    cursor: default;
+    color: lightgray;
+}
+
 .custom-file-input ~ .custom-file-label::after {
     content: "Tallózás";
 }
