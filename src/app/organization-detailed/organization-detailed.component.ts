@@ -5,7 +5,7 @@ import { OrganizationService } from 'src/bll/services/organization-service';
 import { TokenService } from 'src/bll/services/token-service';
 import { ExportService } from 'src/bll/services/export-service';
 import { RepositoryListModel } from 'src/bll/models/repository-list.model';
-import { Task } from 'src/bll/models/task.model';
+import { TaskModel } from 'src/bll/models/task.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CreateEditTaskModalComponent } from '../create-edit-task-modal/create-edit-task-modal.component';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
@@ -38,8 +38,8 @@ export class OrganizationDetailedComponent implements OnInit {
     'is megtalálhatók, akkor érdemes a hallgatói Repositorykat egy prefixel létrehozni, majd erre a prefixre rászűrni.';
   public taskInfoTitle = 'Feladatok';
   public taskInfoContent = 'Minden Organizationhöz fel lehet venni feladatokat. Ezekhez meg lehet adni egy név mellett ' +
-    'opcionálisan egy határidőt és egy Comment mintát. Ez utóbbi úgy működik, hogy amennyiben egy Pull Requesthez ' +
-    'a mintára illeszkedő Commentet hagysz, a rendszer felismeri, hogy hány pontot adtál a feladatra.';
+    'opcionálisan egy határidőt és egy comment mintát. Ez utóbbi úgy működik, hogy amennyiben egy Pull Requesthez ' +
+    'a mintára illeszkedő commentet hagysz, a rendszer felismeri, hogy hány pontot adtál a feladatra.';
 
   public constructor(
     private route: ActivatedRoute,
@@ -90,7 +90,7 @@ export class OrganizationDetailedComponent implements OnInit {
     return this.organization && this.organization.tasks && this.organization.tasks.length !== 0;
   }
 
-  public moveUp(task: Task): void {
+  public moveUp(task: TaskModel): void {
     const index = this.organization.tasks.indexOf(task);
     if (index !== 0) {
       const otherTask = this.organization.tasks[index - 1];
@@ -100,7 +100,7 @@ export class OrganizationDetailedComponent implements OnInit {
     }
   }
 
-  public moveDown(task: Task): void {
+  public moveDown(task: TaskModel): void {
     const index = this.organization.tasks.indexOf(task);
     if (index !== this.organization.tasks.length - 1) {
       const otherTask = this.organization.tasks[index + 1];
@@ -110,7 +110,7 @@ export class OrganizationDetailedComponent implements OnInit {
     }
   }
 
-  public removeTask(task: Task): void {
+  public removeTask(task: TaskModel): void {
     const modalRef = this.modalService.open(ConfirmModalComponent);
     modalRef.componentInstance.title = `Feladat törlése (${task.name})`;
     modalRef.componentInstance.content = 'Biztos vagy benne, hogy törlöd a feladatot? ' +
@@ -139,17 +139,19 @@ export class OrganizationDetailedComponent implements OnInit {
     }).catch(() => { });
   }
 
-  public openCreateEditTaskModal(task?: Task): void {
+  public openCreateEditTaskModal(task?: TaskModel): void {
     const index = this.organization.tasks.indexOf(task);
-    const modalRef = this.modalService.open(CreateEditTaskModalComponent);
-    if (index !== -1) {
-      modalRef.componentInstance.task = Object.assign(new Task(), task);
+    const modalRef = this.modalService.open(CreateEditTaskModalComponent, { size: 'lg' });
+    if (task) {
+      modalRef.componentInstance.task = Object.assign(new TaskModel(), task);
+      modalRef.componentInstance.taskIndex = index;
     }
-    modalRef.result.then((result: Task) => {
-      if (index === -1) {
-        this.organization.tasks.push(result);
-      } else {
+    modalRef.componentInstance.tasks = this.organization.tasks;
+    modalRef.result.then((result: TaskModel) => {
+      if (task) {
         this.organization.tasks[index] = result;
+      } else {
+        this.organization.tasks.push(result);
       }
       this.organizationService.saveOrganizationToLocalStorage(this.organization);
     }).catch(() => { });

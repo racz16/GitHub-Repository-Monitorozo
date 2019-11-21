@@ -2,32 +2,38 @@
     <h4 class="modal-title">Feladat</h4>
 </div>
 <div class="modal-body">
-    <div class="form-group">
-        <label for="name">Név*</label>
-        <input type="text" class="form-control" id="name" [(ngModel)]="task.name">
-    </div>
-    <div class="form-group">
-        <label for="deadline">Határidő</label>
-        <div class="input-group">
-            <input id="deadline" class="form-control" placeholder="éééé.hh.nn." name="dp" ngbDatepicker
-                #dp="ngbDatepicker" [(ngModel)]="task.deadline">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+    <div class="row">
+        <div class="form-group col-6">
+            <label for="name">Név *</label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="task.name">
+        </div>
+        <div class="form-group col-6">
+            <label for="deadline">Határidő</label>
+            <div class="input-group">
+                <input id="deadline" class="form-control" placeholder="éééé.hh.nn." name="dp" ngbDatepicker
+                    #dp="ngbDatepicker" [(ngModel)]="task.deadline">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="commentPrefix">Comment prefix</label>
-        <input type="text" class="form-control" id="commentPrefix" [(ngModel)]="task.commentPrefix">
-    </div>
-    <div class="form-group">
-        <label for="commentPostfix">Comment postfix</label>
-        <input type="text" class="form-control" id="commentPostfix" [(ngModel)]="task.commentPostfix">
+        <div class="form-group col-6">
+            <label for="commentPrefix">Comment prefix</label>
+            <input type="text" class="form-control" id="commentPrefix" [(ngModel)]="task.commentPrefix">
+        </div>
+        <div class="form-group col-6">
+            <label for="commentPostfix">Comment postfix</label>
+            <input type="text" class="form-control" id="commentPostfix" [(ngModel)]="task.commentPostfix">
+        </div>
     </div>
     <p>Comment minta</p>
     <p class="text-center">
         {{task.commentPrefix}}&lt;Pontszám&gt;{{task.commentPostfix}}
     </p>
+    <div *ngIf="!isCommentPatternValid()" class="alert alert-warning text-justify" role="alert">
+        Már létezik ilyen comment minta egy másik feladathoz. Nem ajánlatos két ugyanolyan létrehozni, mivel így a
+        rendszer képtelen lesz eldönteni, hogy egy Pull requst (és az arra írt comment) melyik feladathoz tartozik.
+    </div>
 </div>
 <div class="modal-footer">
     <button [disabled]="!task || !task.name || !task.name.trim()" type="button" class="btn btn-secondary"

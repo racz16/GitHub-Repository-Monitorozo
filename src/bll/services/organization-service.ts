@@ -3,8 +3,10 @@ import { Observable, of } from 'rxjs';
 import { OrganizationListModel } from '../models/organization-list.model';
 import { OrganizationDetailedModel } from '../models/organization-detailed.model';
 import { RepositoryListModel } from '../models/repository-list.model';
-import { Task } from '../models/task.model';
+import { TaskModel } from '../models/task.model';
 import { Deadline } from '../models/deadline.model';
+import { RepositoryDetailedModel } from '../models/repository-detailed.model';
+import { PullRequestModel } from '../models/pull-request.model';
 
 @Injectable({
     providedIn: 'root',
@@ -23,12 +25,12 @@ export class OrganizationService {
         return of(organizations);
     }
 
-    public getOrganization(id: string): Observable<OrganizationDetailedModel> {
+    public getOrganization(organizationName: string): Observable<OrganizationDetailedModel> {
         //TODO: mock helyett bekötni
         const organization = new OrganizationDetailedModel();
         organization.name = 'Sznikak-19F2';
         organization.repositories = new Array<RepositoryListModel>();
-        organization.tasks = new Array<Task>();
+        organization.tasks = new Array<TaskModel>();
 
         const rep1 = new RepositoryListModel();
         rep1.name = 'sznikak-kbela';
@@ -67,6 +69,28 @@ export class OrganizationService {
         }
 
         return of(organization);
+    }
+
+    public getRepository(organizationName: string, repositoryName: string): Observable<RepositoryDetailedModel> {
+        const repository = new RepositoryDetailedModel();
+        repository.name = 'sznikak-kbela';
+        repository.organization = 'Sznikak-19F2';
+        repository.pullRequests = new Array<PullRequestModel>();
+        for (let i = 1; i < 7; i++) {
+            const pr = new PullRequestModel();
+            pr.name = `${i}. feladat PR`;
+            pr.branch = `${i}-feladat-brach`;
+            pr.commitCount = i;
+            pr.pointCount = 5 - i;
+            pr.creationTime = new Date();
+            pr.lastCommitTime = new Date();
+            pr.taskDeadline = new Date();
+            if (i === 2) {
+                pr.taskDeadline = new Date(2019, 10, 20);
+            }
+            repository.pullRequests.push(pr);
+        }
+        return of(repository);
     }
 
     public saveOrganizationToLocalStorage(organization: OrganizationDetailedModel): void {

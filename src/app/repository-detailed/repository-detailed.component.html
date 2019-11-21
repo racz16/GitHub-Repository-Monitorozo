@@ -1,0 +1,44 @@
+<grm-set-token *ngIf="!isThereToken()" [removeTokenButton]="false"></grm-set-token>
+<div class="my-3" *ngIf="isThereToken()">
+    <a class="back-button" [routerLink]="['/organizations', repository.organization]">&lt;&lt;
+        {{repository.organization}}</a>
+    <div class="row">
+        <div class="col-10">
+            <h4 class="mb-3">{{repository.name}}</h4>
+        </div>
+        <div class="col-2 text-right font-size-25-px" title="A Pull requestekre adott pontszámaid összege.">
+            <span class="mr-2">{{repository.getTotalPointCount()}}</span>
+            <i class="fas fa-star"></i>
+        </div>
+    </div>
+    <div class="mt-1 mb-3">
+        <h5 class="mb-2 mr-2 d-inline-block">Pull requestek</h5>
+        <grm-help-button [title]="infoTitle" [content]="infoContent"></grm-help-button>
+        <div *ngFor="let pr of repository.pullRequests" [ngClass]="{'bg-light' : !pr.isEvaluated()}" class="card my-2">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-10">
+                        <h5 class="card-title">{{pr.name}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{pr.branch}}</h6>
+                    </div>
+                    <div *ngIf="pr.isEvaluated()" class="col-2 text-right font-size-25-px"
+                        title="A Pull requestre adott pontszámod.">
+                        <span class="mr-2">{{pr.pointCount}}</span>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4" [ngClass]="{'text-danger' : pr.isCreationLate()}">
+                        Létrehozás: {{pr.creationTime | date:'yyyy.MM.dd.'}}
+                    </div>
+                    <div class="col-4 text-center" [ngClass]="{'text-danger' : pr.isLastCommitLate()}">
+                        Utolsó commit: {{pr.lastCommitTime | date:'yyyy.MM.dd.'}}
+                    </div>
+                    <div class="col-4 text-right" [ngClass]="{'text-danger' : pr.isCommitCountNotEnough()}">
+                        Commitok száma: {{pr.commitCount}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

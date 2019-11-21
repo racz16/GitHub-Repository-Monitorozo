@@ -45,10 +45,12 @@
                         {{task.commentPrefix}}&lt;Pontszám&gt;{{ task.commentPostfix}}
                     </td>
                     <td class="text-right">
-                        <i (click)="moveUp(task)" class=" fas fa-chevron-up p-2"></i>
-                        <i (click)="moveDown(task)" class="fas fa-chevron-down p-2"></i>
-                        <i (click)="openCreateEditTaskModal(task)" class="fa fa-edit p-2"></i>
-                        <i (click)="removeTask(task)" class="fas fa-trash p-2"></i>
+                        <i (click)="moveUp(task)" class=" fas fa-chevron-up p-2" title="Feladat mozgatása felfelé."></i>
+                        <i (click)="moveDown(task)" class="fas fa-chevron-down p-2"
+                            title="Feladat mozgatása lefelé."></i>
+                        <i (click)="openCreateEditTaskModal(task)" class="fa fa-edit p-2"
+                            title="Feladat szerkesztése."></i>
+                        <i (click)="removeTask(task)" class="fas fa-trash p-2" title="Feladat törlése."></i>
                     </td>
                 </tr>
             </tbody>

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SettingsComponent } from './settings/settings.component';
 import { OrganizationListComponent } from './organization-list/organization-list.component';
 import { OrganizationDetailedComponent } from './organization-detailed/organization-detailed.component';
+import { RepositoryDetailedComponent } from './repository-detailed/repository-detailed.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'organizations/:organizationId/repositories/:repositoryId',
-    component: SettingsComponent
+    component: RepositoryDetailedComponent
   },
   {
     path: 'organizations/:organizationId',

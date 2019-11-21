@@ -1,9 +1,9 @@
 import { RepositoryListModel } from './repository-list.model';
-import { Task } from './task.model';
+import { TaskModel } from './task.model';
 
 export class OrganizationDetailedModel {
     public name: string;
     public prefix: string;
     public repositories: Array<RepositoryListModel>;
-    public tasks: Array<Task>;
+    public tasks: Array<TaskModel>;
 }

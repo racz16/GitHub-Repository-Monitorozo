@@ -11,6 +11,7 @@ import { HelpButtonComponent } from './help-button/help-button.component';
 import { CreateEditTaskModalComponent } from './create-edit-task-modal/create-edit-task-modal.component';
 import { FormsModule } from '@angular/forms';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
+import { RepositoryDetailedComponent } from './repository-detailed/repository-detailed.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
     HelpButtonComponent,
     CreateEditTaskModalComponent,
     ConfirmModalComponent,
+    RepositoryDetailedComponent,
   ],
   imports: [
     BrowserModule,

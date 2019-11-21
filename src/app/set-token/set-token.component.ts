@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { TokenService } from 'src/bll/services/token-service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'grm-set-token',
@@ -14,7 +16,7 @@ export class SetTokenComponent implements OnInit {
   public tokenTextArea: ElementRef<HTMLTextAreaElement>;
   public token: string;
 
-  public constructor(private tokenService: TokenService) { }
+  public constructor(private tokenService: TokenService, private modalService: NgbModal) { }
 
   public ngOnInit(): void {
     this.refreshToken();
@@ -26,8 +28,17 @@ export class SetTokenComponent implements OnInit {
   }
 
   public removeToken(): void {
-    this.tokenService.removeTokenFromLocalStorage();
-    this.refreshToken();
+    const modalRef = this.modalService.open(ConfirmModalComponent);
+    modalRef.componentInstance.title = 'Token törlése';
+    modalRef.componentInstance.content = 'Biztos vagy benne, hogy törlöd a tokent? ' +
+      'Vigyázat, ez a művelet nem visszavonható és a token törlését követően nem leszel képes használni az oldalt.';
+    modalRef.componentInstance.confirmButtonText = 'Törlés';
+    modalRef.result.then((result: string) => {
+      if (result === 'confirm') {
+        this.tokenService.removeTokenFromLocalStorage();
+        this.refreshToken();
+      }
+    }).catch(() => { });
   }
 
   public isRemoveTokenButtonDisabled(): boolean {
