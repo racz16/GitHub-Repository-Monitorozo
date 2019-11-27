@@ -7,22 +7,25 @@ import { TaskModel } from '../models/task.model';
 import { Deadline } from '../models/deadline.model';
 import { RepositoryDetailedModel } from '../models/repository-detailed.model';
 import { PullRequestModel } from '../models/pull-request.model';
+import { GetUser } from 'src/dal/services/GetUser';
 
 @Injectable({
     providedIn: 'root',
 })
 export class OrganizationService {
 
-    public getOrganizations(): Observable<Array<OrganizationListModel>> {
-        //TODO: mock helyett bekötni
+    public constructor(private getUser: GetUser) {
+
+    }
+
+    public async getOrganizations(): Promise<Array<OrganizationListModel>> {
+        const result = await this.getUser.GetOrganizations().toPromise();
         const organizations = new Array<OrganizationListModel>();
-        organizations.push(new OrganizationListModel('Sznikak-19F1', 335));
-        organizations.push(new OrganizationListModel('MobWeb-19F2', 332));
-        organizations.push(new OrganizationListModel('Adatvez-19F2', 181));
-        organizations.push(new OrganizationListModel('Klitech-19F1', 147));
-        organizations.push(new OrganizationListModel('SzoftLab1-19F1', 173));
-        organizations.push(new OrganizationListModel('SzoftLab2-19F2', 166));
-        return of(organizations);
+        for (const organization of result) {
+            //TODO: repok számát vagy lekérni vagy törölni
+            organizations.push(new OrganizationListModel(organization.login, 0));
+        }
+        return organizations;
     }
 
     public getOrganization(organizationName: string): Observable<OrganizationDetailedModel> {

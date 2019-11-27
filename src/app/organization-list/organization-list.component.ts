@@ -19,16 +19,10 @@ export class OrganizationListComponent implements OnInit {
   public constructor(
     private tokenService: TokenService,
     private organizationService: OrganizationService,
-    private getuser: GetUser
-  ) { 
-    
-    getuser.GetOrganizations().subscribe(resp=>{
-      console.log(resp)
-    })
-  }
+  ) { }
 
-  public ngOnInit(): void {
-    this.organizationService.getOrganizations().subscribe((olm) => this.organizations = olm);
+  public async ngOnInit(): Promise<void> {
+    this.organizations = await this.organizationService.getOrganizations();
   }
 
   public isThereToken(): boolean {
