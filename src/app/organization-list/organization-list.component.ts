@@ -19,7 +19,32 @@ export class OrganizationListComponent implements OnInit {
   public constructor(
     private tokenService: TokenService,
     private organizationService: OrganizationService,
-  ) { }
+    private getuser: GetUser
+
+  ) { 
+    
+    getuser.GetOrganizations().subscribe(resp=>{
+      console.log(resp)
+    })
+    getuser.GetRepositories("hfclassroomtest").subscribe(resp=>{
+      console.log(resp)
+    })
+
+    getuser.GetPullRequests("hfclassroomtest","test-repo").subscribe(resp=>{
+      console.log(resp)
+    })
+
+   /* getuser.GetPullRequestComments("hfclassroomtest","test-repo","2").subscribe(resp=>{
+      console.log(resp)
+    })
+
+    /*getuser.GetPullRequestCommits("hfclassroomtest","test-repo","3").subscribe(resp=>{
+      console.log(resp)
+    })*/
+    
+    console.log(this.organizationService.countPointsForPullrequest("3","Pont: ","","hfclassroomtest","test-repo"))
+    console.log(this.organizationService.countTotalPoints("Pont: ","","hfclassroomtest","test-repo"))
+  }
 
   public async ngOnInit(): Promise<void> {
     this.organizations = await this.organizationService.getOrganizations();

@@ -7,21 +7,19 @@ import { TaskModel } from '../models/task.model';
 import { Deadline } from '../models/deadline.model';
 import { RepositoryDetailedModel } from '../models/repository-detailed.model';
 import { PullRequestModel } from '../models/pull-request.model';
-import { GetUser } from 'src/dal/services/GetUser';
+import { GetUser } from '../../dal/services/GetUser'
 
 @Injectable({
     providedIn: 'root',
 })
 export class OrganizationService {
 
-    public constructor(private getUser: GetUser) {
-
-    }
+    public constructor(private getUser: GetUser) { }
 
     public async getOrganizations(): Promise<Array<OrganizationListModel>> {
         const result = await this.getUser.GetOrganizations().toPromise();
         const organizations = new Array<OrganizationListModel>();
-        for (const organization of result) {
+        for (const organization of result as Array<any>) {
             //TODO: repok számát vagy lekérni vagy törölni
             organizations.push(new OrganizationListModel(organization.login, 0));
         }
@@ -106,6 +104,30 @@ export class OrganizationService {
     private loadOrganizationFromLocalStorage(name: string): OrganizationDetailedModel {
         const json = window.localStorage.getItem(name);
         return JSON.parse(json);
+    }
+
+    public async countPointsForPullrequest(pullrequestID: string, commentPrefix: string, commentPostfix: string, owner: string, repo: string) {
+        const comments = await this.getUser.GetPullRequestComments(owner, repo, pullrequestID).toPromise()
+        for (const iterator of comments as Array<any>) {
+            const commentBody: string = iterator.body
+            if (commentBody.startsWith(commentPrefix) && commentBody.endsWith(commentPostfix)) {
+                const points = commentBody.substring(commentPrefix.length, commentBody.length - commentPostfix.length)
+                return Number(points)
+            }
+        }
+        return -1
+
+    }
+
+    public async countTotalPoints(commentPrefix: string, commentPostfix: string, owner: string, repo: string) {
+        let counter = 0
+        const pullrequests = await this.getUser.GetPullRequests(owner, repo).toPromise()
+        for (const iterator of pullrequests as Array<any>) {
+            const pointforrequest = await this.countPointsForPullrequest(iterator.number, commentPrefix, commentPostfix, owner, repo)
+            if (pointforrequest != -1)
+                counter += pointforrequest
+        }
+        return counter
     }
 
 }
