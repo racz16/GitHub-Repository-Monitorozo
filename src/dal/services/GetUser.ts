@@ -16,12 +16,20 @@ export class GetUser{
     public constructor(private tokenservice: TokenService,private httpClient:HttpClient){}
 
     public GetOrganizations(){
-        
-        console.log(this.httpOptions)
         return this.httpClient.get(this.apiUrl+"user/orgs",this.httpOptions);
     }
 
-    
+    public GetRepositories(organization: string){
+        return this.httpClient.get(this.apiUrl+"orgs/"+organization+"/repos",this.httpOptions);
+    }
+
+    public GetPullRequests(owner: string,repository: string){
+        return this.httpClient.get(this.apiUrl+"repos/"+owner+"/"+repository+"/issues",this.httpOptions);
+    }
+
+    public GetPullRequestComments(owner: string,repository: string,number:string){
+        return this.httpClient.get(this.apiUrl+"repos/"+owner+"/"+repository+"/issues/"+number+"/comments",this.httpOptions);
+    }
 
 
 }

@@ -22,9 +22,21 @@ export class OrganizationListComponent implements OnInit {
     private getuser: GetUser
   ) { 
     
-    getuser.GetOrganizations().subscribe(resp=>{
+    /*getuser.GetOrganizations().subscribe(resp=>{
       console.log(resp)
     })
+    getuser.GetRepositories("hfclassroomtest").subscribe(resp=>{
+      console.log(resp)
+    })
+
+    getuser.GetPullRequests("hfclassroomtest","test-repo").subscribe(resp=>{
+      console.log(resp)
+    })*/
+
+    getuser.GetPullRequestComments("hfclassroomtest","test-repo","2").subscribe(resp=>{
+      console.log(resp)
+    })
+
   }
 
   public ngOnInit(): void {
