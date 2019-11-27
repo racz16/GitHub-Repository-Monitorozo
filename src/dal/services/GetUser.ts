@@ -7,19 +7,21 @@ import { Injectable } from '@angular/core';
 export class GetUser{
 
     apiUrl = 'https://api.github.com/'
+    httpOptions = {
+        headers: new HttpHeaders({
+            'Authorization':'Bearer '+this.tokenservice.getTokenFromLocalStorage()
+        })
+    };
 
-    public constructor(private tokenservice: TokenService,private httpClient:HttpClient){
-        
-    }
+    public constructor(private tokenservice: TokenService,private httpClient:HttpClient){}
+
     public GetOrganizations(){
-    
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Authorization':'Bearer '+this.tokenservice.getTokenFromLocalStorage()
-            })
-        };
-        console.log(httpOptions)
-        return this.httpClient.get(this.apiUrl+"user/orgs",httpOptions);
-       
+        
+        console.log(this.httpOptions)
+        return this.httpClient.get(this.apiUrl+"user/orgs",this.httpOptions);
     }
+
+    
+
+
 }
