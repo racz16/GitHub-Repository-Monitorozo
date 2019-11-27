@@ -31,5 +31,7 @@ export class GetUser{
         return this.httpClient.get(this.apiUrl+"repos/"+owner+"/"+repository+"/issues/"+number+"/comments",this.httpOptions);
     }
 
-
+    public GetPullRequestCommits(owner: string,repository: string,number:string){
+        return this.httpClient.get(this.apiUrl+"repos/"+owner+"/"+repository+"/pulls/"+number+"/commits",this.httpOptions);
+    }
 }

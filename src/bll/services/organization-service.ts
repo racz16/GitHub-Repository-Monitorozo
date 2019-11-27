@@ -7,11 +7,14 @@ import { TaskModel } from '../models/task.model';
 import { Deadline } from '../models/deadline.model';
 import { RepositoryDetailedModel } from '../models/repository-detailed.model';
 import { PullRequestModel } from '../models/pull-request.model';
+import { GetUser} from '../../dal/services/GetUser'
 
 @Injectable({
     providedIn: 'root',
 })
 export class OrganizationService {
+
+    public constructor(private getuser:GetUser){}
 
     public getOrganizations(): Observable<Array<OrganizationListModel>> {
         //TODO: mock helyett bekötni
@@ -103,6 +106,30 @@ export class OrganizationService {
     private loadOrganizationFromLocalStorage(name: string): OrganizationDetailedModel {
         const json = window.localStorage.getItem(name);
         return JSON.parse(json);
+    }
+
+    public async countPointsForPullrequest(pullrequestID:string,commentPrefix:string,commentPostfix:string,owner:string,repo:string){
+        const comments=await this.getuser.GetPullRequestComments(owner,repo,pullrequestID).toPromise()
+        for (const iterator of comments as Array<any>) {
+            const commentBody: string =iterator.body
+            if(commentBody.startsWith(commentPrefix)&&commentBody.endsWith(commentPostfix)){
+                const points = commentBody.substring(commentPrefix.length,commentBody.length-commentPostfix.length)
+                return Number(points) 
+            }
+        }
+        return -1
+        
+    }
+
+    public async countTotalPoints(commentPrefix:string,commentPostfix:string,owner:string,repo:string){
+        let counter=0
+        const pullrequests=await this.getuser.GetPullRequests(owner,repo).toPromise()
+        for (const iterator of pullrequests as Array<any>) {
+            const pointforrequest=await this.countPointsForPullrequest(iterator.number,commentPrefix,commentPostfix,owner,repo)
+            if(pointforrequest!=-1)
+             counter+=pointforrequest
+        }
+        return counter
     }
 
 }

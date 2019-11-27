@@ -20,9 +20,10 @@ export class OrganizationListComponent implements OnInit {
     private tokenService: TokenService,
     private organizationService: OrganizationService,
     private getuser: GetUser
+
   ) { 
     
-    /*getuser.GetOrganizations().subscribe(resp=>{
+    getuser.GetOrganizations().subscribe(resp=>{
       console.log(resp)
     })
     getuser.GetRepositories("hfclassroomtest").subscribe(resp=>{
@@ -31,12 +32,18 @@ export class OrganizationListComponent implements OnInit {
 
     getuser.GetPullRequests("hfclassroomtest","test-repo").subscribe(resp=>{
       console.log(resp)
-    })*/
+    })
 
-    getuser.GetPullRequestComments("hfclassroomtest","test-repo","2").subscribe(resp=>{
+   /* getuser.GetPullRequestComments("hfclassroomtest","test-repo","2").subscribe(resp=>{
       console.log(resp)
     })
 
+    /*getuser.GetPullRequestCommits("hfclassroomtest","test-repo","3").subscribe(resp=>{
+      console.log(resp)
+    })*/
+    
+    console.log(this.organizationService.countPointsForPullrequest("3","Pont: ","","hfclassroomtest","test-repo"))
+    console.log(this.organizationService.countTotalPoints("Pont: ","","hfclassroomtest","test-repo"))
   }
 
   public ngOnInit(): void {
