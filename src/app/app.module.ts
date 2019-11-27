@@ -12,6 +12,7 @@ import { CreateEditTaskModalComponent } from './create-edit-task-modal/create-ed
 import { FormsModule } from '@angular/forms';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { RepositoryDetailedComponent } from './repository-detailed/repository-detailed.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { RepositoryDetailedComponent } from './repository-detailed/repository-de
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   entryComponents: [
     CreateEditTaskModalComponent,
