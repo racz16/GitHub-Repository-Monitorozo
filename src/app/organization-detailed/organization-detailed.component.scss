@@ -1,12 +1,31 @@
+a.fab{
+    color: black;
+}
+
+a.fab:hover{
+    color: dodgerblue;
+    text-decoration: none;
+}
+
+.org-name{
+    display: inline-block;
+    margin-right: 5px;;
+}
+
 .repo-name{
     display: inline-block;
     width: calc(100% - 65px);
+}
+
+.list-group-item{
+    padding: 10px;
 }
 
 .stat{
     display: inline-block;
     width: 55px;
     margin: 0 5px;
+    text-align: right;
 
     span{
         margin-right: 5px;

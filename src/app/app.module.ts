@@ -12,7 +12,9 @@ import { CreateEditTaskModalComponent } from './create-edit-task-modal/create-ed
 import { FormsModule } from '@angular/forms';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { RepositoryDetailedComponent } from './repository-detailed/repository-detailed.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { UnauthorizedInterceptor } from 'src/bll/services/unauthorized-interceptor';
+import { InfoModalComponent } from './info-modal/info-modal.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
     CreateEditTaskModalComponent,
     ConfirmModalComponent,
     RepositoryDetailedComponent,
+    InfoModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,9 +38,16 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   entryComponents: [
     CreateEditTaskModalComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    InfoModalComponent
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UnauthorizedInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-<grm-set-token *ngIf="!isThereToken()" [removeTokenButton]="false"></grm-set-token>
+<grm-set-token *ngIf="!isThereToken()" (tokenChanged)="refresh()" [removeTokenButton]="false"></grm-set-token>
 <div class="my-3" *ngIf="isThereToken()">
     <h4 class="mb-3 mr-2 d-inline-block">Organization lista</h4>
     <grm-help-button [title]="infoTitle" [content]="infoContent"></grm-help-button>
@@ -7,10 +7,6 @@
             [routerLink]="['/organizations', organization.name]" class="list-group-item list-group-item-action">
             <span class="org-name">
                 {{organization.name}}
-            </span>
-            <span class="stat" title="Az Organizationben található Repositoryk száma.">
-                <span>{{organization.repositoryCount}}</span>
-                <i class="fas fa-users"></i>
             </span>
         </button>
     </div>

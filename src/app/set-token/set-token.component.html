@@ -3,12 +3,13 @@
         Az oldal használatához meg kell adnod egy GitHub access tokent. Ennek megadásához jelentkezz be a GitHub
         felhasználói fiókodba, majd a jobb felső sarokban található lenyíló menüben válaszd a <i>Settings</i> opciót. A
         bal oldali sávból válaszd a <i>Developer settings</i> menüpontot, majd a <i>Personal access tokens</i>-t. Nyomd
-        meg a <i>Generate new token</i> gombot, majd másold be ide a kapott tokent. A mentés gombra kattintva az oldal
-        működésre készen áll. Ha szükséges, a tokenedet bármikor átírhatod.
+        meg a <i>Generate new token</i> gombot, a listában pipáld be a <i>repo</i> feliratot, majd másold be ide a
+        kapott tokent. A mentés gombra kattintva az oldal működésre készen áll. Ha szükséges, a tokenedet bármikor
+        átírhatod.
     </div>
     <div class="form-group">
         <label for="tokenTextArea">GitHub token</label>
-        <textarea class="form-control" id="tokenTextArea" #tokenTextArea rows="3" [value]="token"></textarea>
+        <textarea class="form-control" id="tokenTextArea" #tokenTextArea rows="1" [value]="token"></textarea>
     </div>
     <button (click)="setToken()" class="btn btn-secondary">Mentés</button>
 </div>

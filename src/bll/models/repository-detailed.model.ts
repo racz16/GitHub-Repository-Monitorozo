@@ -2,6 +2,7 @@ import { PullRequestModel } from './pull-request.model';
 
 export class RepositoryDetailedModel {
     public name: string;
+    public url: string;
     public organization: string;
     public pullRequests: Array<PullRequestModel>;
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { TokenService } from 'src/bll/services/token-service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
@@ -10,6 +10,8 @@ import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component'
 })
 export class SetTokenComponent implements OnInit {
 
+  @Output()
+  public tokenChanged = new EventEmitter<void>();
   @Input()
   public removeTokenButton = true;
   @ViewChild('tokenTextArea', { static: false })
@@ -25,6 +27,7 @@ export class SetTokenComponent implements OnInit {
   public setToken(): void {
     this.token = this.tokenTextArea.nativeElement.value;
     this.tokenService.saveTokenToLocalStorage(this.token);
+    this.tokenChanged.emit();
   }
 
   public removeToken(): void {
@@ -37,6 +40,7 @@ export class SetTokenComponent implements OnInit {
       if (result === 'confirm') {
         this.tokenService.removeTokenFromLocalStorage();
         this.refreshToken();
+        this.tokenChanged.emit();
       }
     }).catch(() => { });
   }

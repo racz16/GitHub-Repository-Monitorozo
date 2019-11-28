@@ -1,6 +1,8 @@
 export class PullRequestModel {
     public name: string;
+    public url: string;
     public branch: string;
+    public brachUrl: string;
     public creationTime: Date;
     public lastCommitTime: Date;
     public taskDeadline: Date;
@@ -16,13 +18,13 @@ export class PullRequestModel {
     }
 
     private isLate(deadline: Date, date: Date): boolean {
-        return !deadline ||
-            deadline.getFullYear() < date.getFullYear() ||
-            (deadline.getFullYear() === date.getFullYear() &&
-                deadline.getMonth() < date.getMonth()) ||
-            (deadline.getFullYear() === date.getFullYear() &&
-                deadline.getMonth() === date.getMonth() &&
-                deadline.getDay() < date.getDay());
+        return deadline &&
+            (deadline.getFullYear() < date.getFullYear() ||
+                (deadline.getFullYear() === date.getFullYear() &&
+                    deadline.getMonth() < date.getMonth()) ||
+                (deadline.getFullYear() === date.getFullYear() &&
+                    deadline.getMonth() === date.getMonth() &&
+                    deadline.getDay() < date.getDay()));
     }
 
     public isCommitCountNotEnough(): boolean {

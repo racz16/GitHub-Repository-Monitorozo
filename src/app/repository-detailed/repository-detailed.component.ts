@@ -3,7 +3,6 @@ import { TokenService } from 'src/bll/services/token-service';
 import { RepositoryDetailedModel } from 'src/bll/models/repository-detailed.model';
 import { ActivatedRoute } from '@angular/router';
 import { OrganizationService } from 'src/bll/services/organization-service';
-import { TaskModel } from 'src/bll/models/task.model';
 
 @Component({
   selector: 'grm-repository-detailed',
@@ -26,10 +25,22 @@ export class RepositoryDetailedComponent implements OnInit {
     private tokenService: TokenService
   ) { }
 
-  public ngOnInit() {
-    const organizationId = this.route.snapshot.paramMap.get('organizationId');
-    const repositoryId = this.route.snapshot.paramMap.get('repositoryId');
-    this.organizationService.getRepository(organizationId, repositoryId).subscribe((rdm) => this.repository = rdm);
+  public async ngOnInit() {
+    this.refresh();
+  }
+
+  private getOrganizationName(): string {
+    return this.route.snapshot.paramMap.get('organizationName');
+  }
+
+  private getRepositoryName(): string {
+    return this.route.snapshot.paramMap.get('repositoryName');
+  }
+
+  public async refresh(): Promise<void> {
+    const organizationName = this.getOrganizationName();
+    const repositoryName = this.getRepositoryName();
+    this.repository = await this.organizationService.getRepository(organizationName, repositoryName);
   }
 
   public isThereToken(): boolean {

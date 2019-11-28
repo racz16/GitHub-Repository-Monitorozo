@@ -49,9 +49,12 @@ export class OrganizationDetailedComponent implements OnInit {
     private modalService: NgbModal
   ) { }
 
-  public ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('organizationId');
-    this.organizationService.getOrganization(id).subscribe((odm) => this.organization = odm);
+  public async ngOnInit(): Promise<void> {
+    this.refresh();
+  }
+
+  private getOrganizationName(): string {
+    return this.route.snapshot.paramMap.get('organizationName');
   }
 
   public isThereToken(): boolean {
@@ -71,7 +74,7 @@ export class OrganizationDetailedComponent implements OnInit {
   public setPrefix(): void {
     const prefix = this.prefixInput.nativeElement.value;
     this.organization.prefix = prefix;
-    this.organizationService.saveOrganizationToLocalStorage(this.organization);
+    this.save();
   }
 
   public async fileChanged(event: Event): Promise<void> {
@@ -96,7 +99,7 @@ export class OrganizationDetailedComponent implements OnInit {
       const otherTask = this.organization.tasks[index - 1];
       this.organization.tasks[index] = otherTask;
       this.organization.tasks[index - 1] = task;
-      this.organizationService.saveOrganizationToLocalStorage(this.organization);
+      this.save();
     }
   }
 
@@ -106,7 +109,7 @@ export class OrganizationDetailedComponent implements OnInit {
       const otherTask = this.organization.tasks[index + 1];
       this.organization.tasks[index] = otherTask;
       this.organization.tasks[index + 1] = task;
-      this.organizationService.saveOrganizationToLocalStorage(this.organization);
+      this.save();
     }
   }
 
@@ -116,11 +119,12 @@ export class OrganizationDetailedComponent implements OnInit {
     modalRef.componentInstance.content = 'Biztos vagy benne, hogy törlöd a feladatot? ' +
       'Ezt a lépést később nem tudod visszavonni.';
     modalRef.componentInstance.confirmButtonText = 'Törlés';
-    modalRef.result.then((result: string) => {
+    modalRef.result.then(async (result: string) => {
       if (result === 'confirm') {
         const index = this.organization.tasks.indexOf(task);
         this.organization.tasks.splice(index, 1);
-        this.organizationService.saveOrganizationToLocalStorage(this.organization);
+        this.save();
+        this.refresh();
       }
     }).catch(() => { });
   }
@@ -131,10 +135,11 @@ export class OrganizationDetailedComponent implements OnInit {
     modalRef.componentInstance.content = 'Biztos vagy benne, hogy az Organization összes feladatát törlöd? ' +
       'Ezt a lépést később nem tudod visszavonni.';
     modalRef.componentInstance.confirmButtonText = 'Törlés';
-    modalRef.result.then((result: string) => {
+    modalRef.result.then(async (result: string) => {
       if (result === 'confirm') {
         this.organization.tasks = [];
-        this.organizationService.saveOrganizationToLocalStorage(this.organization);
+        this.save();
+        this.refresh();
       }
     }).catch(() => { });
   }
@@ -147,14 +152,26 @@ export class OrganizationDetailedComponent implements OnInit {
       modalRef.componentInstance.taskIndex = index;
     }
     modalRef.componentInstance.tasks = this.organization.tasks;
-    modalRef.result.then((result: TaskModel) => {
+    modalRef.result.then(async (result: TaskModel) => {
       if (task) {
         this.organization.tasks[index] = result;
       } else {
         this.organization.tasks.push(result);
       }
-      this.organizationService.saveOrganizationToLocalStorage(this.organization);
+      this.save();
+      this.refresh();
     }).catch(() => { });
+  }
+
+  public async refresh(): Promise<void> {
+    if (this.tokenService.isTokenSavedInLocalStorage()) {
+      const organizationName = this.getOrganizationName();
+      this.organization = await this.organizationService.getOrganization(organizationName);
+    }
+  }
+
+  private save(): void {
+    this.organizationService.saveOrganizationToLocalStorage(this.organization);
   }
 
 }

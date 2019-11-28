@@ -1,7 +1,10 @@
-<grm-set-token *ngIf="!isThereToken()" [removeTokenButton]="false"></grm-set-token>
-<div class="my-3" *ngIf="isThereToken()">
+<grm-set-token *ngIf="!isThereToken()" [removeTokenButton]="false" (tokenChanged)="refresh()"></grm-set-token>
+<div class="my-3" *ngIf="isThereToken() && organization">
     <a class="back-button" routerLink="/">&lt;&lt; Organization lista</a>
-    <h4 class="mb-3">{{organization.name}}</h4>
+    <div>
+        <h4 class="mb-3 org-name">{{organization.name}}</h4>
+        <a class="fab fa-github" [href]="organization.url" target="_blank"></a>
+    </div>
     <div class="mt-1 mb-3">
         <h5 class="mb-2 mr-2 d-inline-block">Eredmények exportálása</h5>
         <grm-help-button [title]="exportInfoTitle" [content]="exportInfoContent"></grm-help-button>

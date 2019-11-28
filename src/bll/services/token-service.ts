@@ -10,9 +10,9 @@ export class TokenService {
     public saveTokenToLocalStorage(token: string): void {
         if (!token) {
             this.removeTokenFromLocalStorage();
-            return;
+        } else {
+            window.localStorage.setItem(TokenService.TOKEN_KEY, token);
         }
-        window.localStorage.setItem(TokenService.TOKEN_KEY, token);
     }
 
     public getTokenFromLocalStorage(): string {
