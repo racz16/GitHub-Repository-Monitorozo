@@ -12,7 +12,7 @@ export class Deadline {
     }
 
     public toDate(): Date {
-        return new Date(this.year, this.month - 1, this.day);
+        return new Date(this.year, this.month - 1, this.day, 23, 59, 59, 999);
     }
 
 }

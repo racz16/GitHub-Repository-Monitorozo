@@ -10,21 +10,11 @@ export class PullRequestModel {
     public pointCount: number;
 
     public isCreationLate(): boolean {
-        return this.isLate(this.taskDeadline, this.creationTime);
+        return this.taskDeadline && this.taskDeadline < this.creationTime;
     }
 
     public isLastCommitLate(): boolean {
-        return this.isLate(this.taskDeadline, this.lastCommitTime);
-    }
-
-    private isLate(deadline: Date, date: Date): boolean {
-        return deadline &&
-            (deadline.getFullYear() < date.getFullYear() ||
-                (deadline.getFullYear() === date.getFullYear() &&
-                    deadline.getMonth() < date.getMonth()) ||
-                (deadline.getFullYear() === date.getFullYear() &&
-                    deadline.getMonth() === date.getMonth() &&
-                    deadline.getDay() < date.getDay()));
+        return this.taskDeadline && this.taskDeadline < this.lastCommitTime;
     }
 
     public isCommitCountNotEnough(): boolean {
